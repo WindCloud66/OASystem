@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.houyongju.cloud.dao.FileMapper">
+    <sql id="insertFileFields">
+        filename,REMARK,uploader
+    </sql>
+    <sql id="selectFileAllFields">
+        ID,filename,REMARK,CREATE_DATE,uploader
+    </sql>
+
+
+    <insert id="insertFile" parameterType="FileBean" keyProperty="id">
+        insert into document_inf (<include refid="insertFileFields"></include>)
+        value (#{filename},#{remark},#{uploader})
+    </insert>
+
+
+    <delete id="deleteFile">
+        delete from document_inf where id = #{id}
+    </delete>
+
+    <update id="updateFile" parameterType="FileBean">
+        update document_inf set  filename=#{filename},REMARK=#{remark},
+                              uploader=#{uploader} where id=#{id};
+
+    </update>
+
+    <select id="queryFile" resultType="FileBean" >
+        select <include refid="selectFileAllFields"></include>
+        from document_inf
+        <where>
+            <if test="filename!=null">
+                filename like "%"#{filename}"%"
+            </if>
+
+
+        </where>
+        order by CREATE_DATE desc
+        limit #{offset}, #{limit}
+
+    </select>
+
+    <select id="queryFileCount" resultType="int">
+        select count(id) from document_inf
+        <where>
+            <if test="filename!=null">
+                filename like "%"#{filename}"%"
+            </if>
+        </where>
+    </select>
+
+    <select id="queryFileById" resultType="FileBean">
+        select <include refid="selectFileAllFields"></include> from document_inf where id=#{id}
+    </select>
+    <!--  `ID` int NOT NULL AUTO_INCREMENT,
+  `filename` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `REMARK` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `CREATE_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `uploader` int not NULL,-->
+    <!-- private Integer id;
+     private String filename;
+     private String remark;
+     private Date createTime;
+     private Integer uploader;-->
+<!--    <select id="queryFileLogin" resultType="File">-->
+<!--        select * from document_inf where loginname=#{loginName} and password=#{password};-->
+<!--    </select>-->
+</mapper>

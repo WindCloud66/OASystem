@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.houyongju.cloud.dao.EmployeeMapper">
+    <sql id="insertEmployeeFields">
+        password,DEPT_ID,JOB_ID,NAME,CARD_ID,PHONE,EMAIL,SEX,PARTY,RACE,EDUCATION,imgname
+    </sql>
+    <sql id="selectEmployeeAllFields">
+        ID,password,DEPT_ID,JOB_ID,NAME,CARD_ID,PHONE,EMAIL,SEX,PARTY,RACE,EDUCATION,CREATE_DATE,imgname
+    </sql>
+<!--    <sql id="selectEmployeeAllFields">-->
+<!--        id,loginname,password,status,createdate,Employeename,imgname-->
+<!--    </sql>-->
+
+    <insert id="insertEmployee" parameterType="Employee" keyProperty="id">
+        insert into employee_inf (<include refid="insertEmployeeFields"></include>)
+        value (#{password},#{deptId},#{jobId},#{name},#{cardId},#{phone},#{email},#{sex},#{party},#{race},#{education},#{imgName})
+    </insert>
+
+
+    <delete id="deleteEmployee">
+        delete from Employee_inf where id = #{id}
+    </delete>
+
+    <update id="updateEmployee" parameterType="Employee">
+        update employee_inf set  password=#{password},DEPT_ID=#{deptId},JOB_ID=#{jobId},
+                                NAME=#{name},CARD_ID=#{cardId},PHONE=#{phone},EMAIL=#{email},
+                                SEX=#{sex},PARTY=#{party},RACE=#{race},EDUCATION=#{education},
+                                imgname=#{imgName} where id=#{id};
+
+    </update>
+
+    <select id="queryEmployee" resultType="Employee" >
+        select <include refid="selectEmployeeAllFields"></include>
+        from employee_inf
+
+        <where>
+            <if test="id!=null">
+                ID like "%"#{id}"%"
+            </if>
+            <if test="password!=null">
+                AND password like "%"#{password}"%"
+            </if>
+            <if test="deptId!=null">
+                AND DEPT_ID = #{deptId}
+            </if>
+            <if test="jobId!=null">
+                AND JOB_ID like "%"#{jobId}"%"
+            </if>
+
+            <if test="name!=null">
+                AND NAME like "%"#{name}"%"
+            </if>
+            <if test="cardId!=null">
+                AND CARD_ID = #{cardId}
+            </if>
+            <if test="phone!=null">
+                AND PHONE like "%"#{phone}"%"
+            </if>
+            <if test="email!=null">
+                AND EMAIL = #{email}
+            </if>
+            <if test="sex!=null">
+                AND SEX = #{sex}
+            </if>
+            <if test="party!=null">
+                AND PARTY = #{party}
+            </if>
+            <if test="race!=null">
+                AND RACE like "%"#{race}"%"
+            </if>
+            <if test="education!=null">
+                AND EDUCATION like "%"#{education}"%"
+            </if>
+            <if test="createDate!=null">
+                AND CREATE_DATE like "%"#{createDate}"%"
+            </if>
+            <if test="imgName!=null">
+                AND imgname like "%"#{imgName}"%"
+            </if>
+
+        </where>
+        limit #{offset}, #{limit}
+
+    </select>
+
+    <select id="queryEmployeeCount" resultType="int">
+        select count(id) from employee_inf
+        <where>
+            <if test="id!=null">
+                ID like "%"#{id}"%"
+            </if>
+            <if test="password!=null">
+                AND password like "%"#{password}"%"
+            </if>
+            <if test="deptId!=null">
+                AND DEPT_ID = #{deptId}
+            </if>
+            <if test="jobId!=null">
+                AND JOB_ID like "%"#{jobId}"%"
+            </if>
+
+            <if test="name!=null">
+                AND NAME like "%"#{name}"%"
+            </if>
+            <if test="cardId!=null">
+                AND CARD_ID = #{cardId}
+            </if>
+            <if test="phone!=null">
+                AND PHONE like "%"#{phone}"%"
+            </if>
+            <if test="email!=null">
+                AND EMAIL = #{email}
+            </if>
+            <if test="sex!=null">
+                AND SEX = #{sex}
+            </if>
+            <if test="party!=null">
+                AND PARTY = #{party}
+            </if>
+            <if test="race!=null">
+                AND RACE like "%"#{race}"%"
+            </if>
+            <if test="education!=null">
+                AND EDUCATION like "%"#{education}"%"
+            </if>
+            <if test="createDate!=null">
+                AND CREATE_DATE like "%"#{createDate}"%"
+            </if>
+            <if test="imgName!=null">
+                AND imgname like "%"#{imgName}"%"
+            </if>
+
+        </where>
+    </select>
+
+    <select id="queryEmployeeById" resultType="Employee">
+        select <include refid="selectEmployeeAllFields"></include> from Employee_inf where id=#{id}
+    </select>
+
+<!--    <select id="queryEmployeeLogin" resultType="Employee">-->
+<!--        select * from Employee_inf where loginname=#{loginName} and password=#{password};-->
+<!--    </select>-->
+</mapper>

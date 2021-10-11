@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.houyongju.cloud.dao.UserMapper">
+    <sql id="insertUserFields">
+        loginname,password,status,username,imgname
+    </sql>
+    <sql id="selectUserFields">
+        loginname,password,status,username,imgname
+    </sql>
+    <sql id="selectUserAllFields">
+        id,loginname,password,status,createdate,username,imgname
+    </sql>
+
+    <insert id="insertUser" parameterType="User" keyProperty="id">
+        insert into user_inf (<include refid="insertUserFields"></include>)
+        value (#{loginname},#{password},#{status},#{username},#{imgname})
+    </insert>
+
+    <delete id="deleteUser">
+        delete from user_inf where id = #{id}
+    </delete>
+
+    <update id="updateUser" parameterType="User">
+        update user_inf set loginname=#{loginname},password=#{password},status=#{status},username=#{username},imgname=#{imgname} where id=#{id};
+    </update>
+
+    <select id="queryUser" resultType="User" >
+        select <include refid="selectUserAllFields"></include>
+        from user_inf
+        <where>
+            <if test="loginname!=null">
+                AND loginname like "%"#{loginname}"%"
+            </if>
+            <if test="username!=null">
+                AND username like "%"#{username}"%"
+            </if>
+            <if test="status!=-1">
+                AND status = #{status}
+            </if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="queryUserCount" resultType="int">
+        select count(id) from user_inf
+        <where>
+            <if test="loginname!=null">
+                AND loginname like "%"#{loginname}"%"
+            </if>
+            <if test="username!=null">
+                AND username like "%"#{username}"%"
+            </if>
+            <if test="status!=-1">
+                AND status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryUserById" resultType="User">
+        select <include refid="selectUserAllFields"></include> from user_inf where id=#{id}
+    </select>
+
+    <select id="queryUserLogin" resultType="User">
+        select * from user_inf where loginname=#{loginName} and password=#{password};
+    </select>
+</mapper>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.houyongju.cloud.dao.JobMapper">
+    <sql id="insertJobFields">
+        NAME,REMARK
+    </sql>
+    <sql id="selectJobAllFields">
+        ID,NAME,REMARK
+    </sql>
+ 
+    <insert id="insertJob" parameterType="Job" keyProperty="id">
+        insert into job_inf (<include refid="insertJobFields"></include>)
+        value (#{name},#{remark})
+    </insert>
+
+
+    <delete id="deleteJob">
+        delete from job_inf where id = #{id}
+    </delete>
+
+    <update id="updateJob" parameterType="Job">
+        update job_inf set  NAME=#{name},REMARK=#{remark}
+                                      where id=#{id};
+
+    </update>
+
+    <select id="queryJob" resultType="Job" >
+        select <include refid="selectJobAllFields"></include>
+        from job_inf
+        <where>
+            <if test="name!=null">
+                name like "%"#{name}"%"
+            </if>
+            <if test="remark!=null">
+                AND remark like "%"#{remark}"%"
+            </if>
+
+        </where>
+        limit #{offset}, #{limit}
+
+    </select>
+
+    <select id="queryJobCount" resultType="int">
+        select count(id) from job_inf <where>
+        <if test="name!=null">
+            name like "%"#{name}"%"
+        </if>
+        <if test="remark!=null">
+            AND remark like "%"#{remark}"%"
+        </if>
+
+    </where>
+    </select>
+
+    <select id="queryJobById" resultType="Job">
+        select <include refid="selectJobAllFields"></include> from job_inf where id=#{id}
+    </select>
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="RabbitMQ" />
+        <module name="cloud" />
+        <module name="Redis5" />
+        <module name="dubbo-provider" />
+        <module name="MybatisPulsTest" />
+        <module name="house" />
+        <module name="demo" />
+        <module name="dubbo-interface" />
+        <module name="System" />
+        <module name="dubbo-consumer" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="cloud" target="1.8" />
+      <module name="demo" target="1.8" />
+      <module name="dubbo-consumer" target="1.8" />
+      <module name="dubbo-interface" target="1.8" />
+      <module name="dubbo-provider" target="1.8" />
+      <module name="house" target="1.8" />
+      <module name="MybatisPulsTest" target="1.8" />
+      <module name="oa" target="1.8" />
+      <module name="RabbitMQ" target="1.8" />
+      <module name="Redis5" target="1.8" />
+      <module name="system" target="1.8" />
+      <module name="System" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="System" options="-parameters" />
+      <module name="cloud" options="-parameters" />
+      <module name="demo" options="-parameters" />
+      <module name="dubbo-consumer" options="-parameters" />
+      <module name="dubbo-provider" options="-parameters" />
+      <module name="house" options="-parameters" />
+    </option>
+  </component>
+</project>

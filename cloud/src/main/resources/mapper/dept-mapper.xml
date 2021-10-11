@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.houyongju.cloud.dao.DeptMapper">
+    <sql id="insertDeptFields">
+        NAME,REMARK
+    </sql>
+    <sql id="selectDeptAllFields">
+        ID,NAME,REMARK
+    </sql>
+ 
+    <insert id="insertDept" parameterType="Dept" keyProperty="id">
+        insert into dept_inf (<include refid="insertDeptFields"></include>)
+        value (#{name},#{remark})
+    </insert>
+
+
+    <delete id="deleteDept">
+        delete from dept_inf where id = #{id}
+    </delete>
+
+    <update id="updateDept" parameterType="Dept">
+        update dept_inf set  NAME=#{name},REMARK=#{remark}
+                                      where id=#{id};
+
+    </update>
+
+    <select id="queryDept" resultType="Dept" >
+        select <include refid="selectDeptAllFields"></include>
+        from dept_inf
+        <where>
+            <if test="name!=null">
+                name like "%"#{name}"%"
+            </if>
+            <if test="remark!=null">
+                AND remark like "%"#{remark}"%"
+            </if>
+
+        </where>
+        limit #{offset}, #{limit}
+
+    </select>
+
+    <select id="queryDeptCount" resultType="int">
+        select count(id) from dept_inf
+        <where>
+            <if test="name!=null">
+                name like "%"#{name}"%"
+            </if>
+            <if test="remark!=null">
+                AND remark like "%"#{remark}"%"
+            </if>
+
+        </where>
+    </select>
+
+    <select id="queryDeptById" resultType="Dept">
+        select <include refid="selectDeptAllFields"></include> from dept_inf where id=#{id}
+    </select>
+</mapper>
